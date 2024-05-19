@@ -835,4 +835,6 @@ let _data = [
       "openai/gpt-3.5-turbo": "B",
       "openai/gpt-4o": "B"
     }
-  ]
+  ].map(value => ({ value, sort: Math.random() }))
+.sort((a, b) => a.sort - b.sort)
+.map(({ value }) => value)

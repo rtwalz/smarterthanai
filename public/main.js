@@ -82,11 +82,19 @@ function updateLeaderboard(showBG){
   models.sort((a, b) => b.correct - a.correct)
   document.getElementById("tbody").innerHTML = ""
   let modelRank = 1
+  let lastScore = 100000
   for (let model of models){
     let bg = "#CCFEFF"
     if (!model.last) bg = "#FFCCCB"
-    document.getElementById("tbody").insertAdjacentHTML("beforeend", `<tr ${showBG ? 'style="background-color:'+bg+';"' : ""}><td>${number === 1 ? "" : modelRank}</td><td title="${model.id}"><img src="/${model.icon}" style="width: 15px; margin-right: 3px; vertical-align: middle;"/>${model.short}</td><td>${model.correct}</td></tr>`)
+
+    let displayScore = ""
+    if (number == 0 && !showBG) displayScore = ""
+    else if (lastScore == model.correct) displayScore = "-"
+    else displayScore = modelRank
+    console.log(displayScore)
+    document.getElementById("tbody").insertAdjacentHTML("beforeend", `<tr ${showBG ? 'style="background-color:'+bg+';"' : ""} ${model.id == "you" ? 'class="you"' : ""}><td>${displayScore}</td><td title="${model.id}"><img src="/${model.icon}" style="width: 15px; margin-right: 3px; vertical-align: middle;"/>${model.short}</td><td>${model.correct}</td></tr>`)
     modelRank++
+    lastScore = model.correct
   }
 }
 
@@ -103,7 +111,7 @@ function updateQuestion(q, choice, showAnswer){
   byID("question").innerText = question.question
   byID("answers").innerHTML = ""
   for (let i=1; i<5; i++){
-    byID("answers").insertAdjacentHTML("beforeend", `<li class="answer" onclick="updateQuestion(${q}, ${i})">${choice === i ? `<img class="sketch" src="/sketch.png"/>` : ""}${question["choice"+i]} ${showAnswer && ["A", "B", "C", "D"][i] == question.correctchoice ? `<img class="check" src="/check.png"/>` : ""}</li>`)
+    byID("answers").insertAdjacentHTML("beforeend", `<li class="answer ${showAnswer && ["A", "B", "C", "D"][i-1] == question.correctchoice ? `bold` : ""}" onclick="updateQuestion(${q}, ${i})">${choice === i ? `<img class="sketch" src="/sketch.png"/>` : ""}${question["choice"+i]} ${showAnswer && ["A", "B", "C", "D"][i-1] == question.correctchoice ? `<img class="check" src="/check.png"/>` : ""}</li>`)
   }
   
 }
@@ -114,13 +122,15 @@ function checkAnswer(){
   for (let model of models) {
     if (model.id == "you"){
       let mappings = ["A", "B", "C", "D"]
-      let answer = mappings[chosenAnswer]
+      let answer = mappings[chosenAnswer-1]
       if (question.correctchoice == answer) {
         model.correct++
         model.last = true
       } else {
         model.last = false
       }
+      console.log(chosenAnswer, answer, question.correctchoice)
+
     } else if (question[model.id] === question.correctchoice) {
       model.correct++
       model.last = true

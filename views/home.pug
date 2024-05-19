@@ -1,3 +1,6 @@
+head.
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 style.
   #main {
     
@@ -50,6 +53,14 @@ style.
     
   }
 
+  .you {
+    border: 2px solid black;
+  }
+
+  .bold {
+    font-weight: 600;
+  }
+
   .sketch {
     width: 42px;
     position: absolute;
@@ -86,7 +97,6 @@ style.
   }
 
   th {
-    border-top: none!important;
   }
 
   th, td {
@@ -102,6 +112,13 @@ style.
     width: 18px;
     position: absolute;
     margin-left: 6px;
+  }
+
+  #manifesto {
+    font-size: 1.2rem;
+    max-width: 600px;
+    padding: 0 50px;
+    margin: 100px auto;
   }
   
   #leaderboard {
@@ -132,6 +149,7 @@ style.
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 500px;
     
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
   }
@@ -166,17 +184,14 @@ style.
   
   #game
     #questionbox
-      #number #1
-      #question Which of the following is the most reasonable action to take for an artist whose work requires the use of a specific hazardous product?
+      #number 
+      #question
       ol(type="A")#answers
-        li.answer Finding a nontoxic product to use and adapting the art-making process as necessary
-        li.answer Reading the product's label and proceeding according to the label directions
-        li.answer Making sure no children are present when using the product
-        li.answer Checking with a qualified toxicologist before using the material
+        
       button#check(onclick="checkAnswer();") Check
   
     #leaderboard
-      div(style="font-weight: 600; font-size: 1.2rem; text-align: center; width: 100%; border-bottom: 2px solid black;") LEADERBOARD
+      div(style="font-weight: 600; font-size: 1.2rem; text-align: center; width: 100%; margin-bottom: 15px; ") LEADERBOARD
       table
         thead
           tr
@@ -184,14 +199,12 @@ style.
             th MODEL
             th(style="width: 78px;") # CORRECT
         tbody#tbody
-          tr
-            td 1
-            td gpt-4
-            td 7
-          tr
-            td 2
-            td YOU (human)
-            td 3
-
+  p#manifesto "Evals" (short for evaluations) are questions designed to test the abilities of large language models. Well, why can't they assess humans? 
+    br
+    br
+    | Answer these questions and benchmark yourself to the latest models. See how you compare. It's time to play, 
+    b Are You Smarter Than An AI?
+  
+          
 script(src="/answers.js")
 script(src="/main.js")
