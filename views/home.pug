@@ -1,0 +1,197 @@
+style.
+  #main {
+    
+    width: 100%; 
+    height: 100vh; 
+  }
+
+  #header {
+    background-image: url('/chalk.jpg');
+    background-color: #000;
+    background-size: cover; 
+    background-position: center; 
+    font-family: SQUEAK;
+    color: rgba(255,255,255,0.8);
+  }
+
+  body {
+    margin: 0;
+    background-color: #ffffe075;
+    
+  }
+
+  #title {
+    font-size: 2.8rem;
+    text-align: center;
+    transform: rotate(2deg);
+    line-height: 1.3;
+  }
+
+  #header {
+   display: flex;
+   gap: 30px;
+   align-items: center;
+   justify-content: center;
+   width: calc(100% - 40px);
+   padding: 50px 20px 50px 20px;
+  }
+
+  #logo {
+    height: 120px;
+  }
+
+  @font-face {
+    font-family: 'SQUEAK';
+    src: url('/chalk.ttf') format('truetype');
+  }
+
+  #gameplay {
+    display: flex;
+    
+  }
+
+  .sketch {
+    width: 42px;
+    position: absolute;
+    left: -35px;
+    top: -7px;
+  }
+
+  #question {
+    font-size: 1.4rem;
+  }
+
+  #answers {
+    padding-left: 20px;
+    
+    font-size: 1.2rem;
+  }
+
+  .answer {
+    box-sizing: border-box; 
+    padding-left: 10px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  #number {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    border-top: none!important;
+  }
+
+  th, td {
+    border: 1px solid #999;
+    padding: 6px 6px;
+  }
+
+  th {
+    font-size: 0.8rem;
+  }
+
+  .check {
+    width: 18px;
+    position: absolute;
+    margin-left: 6px;
+  }
+  
+  #leaderboard {
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
+    filter: brightness(100%);
+    background-color: #fff;
+    max-width: 400px;
+    font-family: serif;
+    color: #333;
+    padding: 30px;
+    transform: rotate(2deg);
+    min-width: 300px;
+    
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
+  }
+
+  #questionbox {
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
+    filter: brightness(100%);
+    background-color: #fff;
+    max-width: 500px;
+    font-family: serif;
+    color: #333;
+    padding: 30px;
+    transform: rotate(-1deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
+  }
+
+  #check {
+    font-family: serif; font-weight: 600; font-size: 1.3rem; padding: 8px; margin-top: 16px;
+    width: fit-content;
+  }
+
+  #game {
+    display: flex;
+    max-width: 1000px;
+    gap: 50px;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+ 
+
+
+#main
+  #header
+    img#logo(src="/apple.png")
+    #title Are You Smarter
+      br
+      | Than An AI?
+  //#manifesto "Evals" (short for evaluations) are questions designed to test the abilities of large language models. Well, why can't they assess humans? 
+  //  br
+  //  | Benchmark yourself to the latest models, and how you compare.
+
+  
+  
+  #game
+    #questionbox
+      #number #1
+      #question Which of the following is the most reasonable action to take for an artist whose work requires the use of a specific hazardous product?
+      ol(type="A")#answers
+        li.answer Finding a nontoxic product to use and adapting the art-making process as necessary
+        li.answer Reading the product's label and proceeding according to the label directions
+        li.answer Making sure no children are present when using the product
+        li.answer Checking with a qualified toxicologist before using the material
+      button#check(onclick="checkAnswer();") Check
+  
+    #leaderboard
+      div(style="font-weight: 600; font-size: 1.2rem; text-align: center; width: 100%; border-bottom: 2px solid black;") LEADERBOARD
+      table
+        thead
+          tr
+            th RANK
+            th MODEL
+            th(style="width: 78px;") # CORRECT
+        tbody#tbody
+          tr
+            td 1
+            td gpt-4
+            td 7
+          tr
+            td 2
+            td YOU (human)
+            td 3
+
+script(src="/answers.js")
+script(src="/main.js")
