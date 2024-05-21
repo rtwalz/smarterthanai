@@ -132,11 +132,11 @@ function checkAnswer(){
         model.correct++
         model.last = true
         byID("a").classList.add("animate")
-        setTimeout(function(){byID("a").classList.remove("animate")}, 5000)
+        setTimeout(function(){byID("a").classList.remove("animate")}, 2000)
       } else {
         model.last = false
         byID("f").classList.add("animate")
-        setTimeout(function(){byID("f").classList.remove("animate")}, 5000)
+        setTimeout(function(){byID("f").classList.remove("animate")}, 2000)
       }
 
     } else {
