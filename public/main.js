@@ -91,7 +91,6 @@ function updateLeaderboard(showBG){
     if (number == 0 && !showBG) displayScore = ""
     else if (lastScore == model.correct) displayScore = "-"
     else displayScore = modelRank
-    console.log(displayScore)
     document.getElementById("tbody").insertAdjacentHTML("beforeend", `<tr ${showBG ? 'style="background-color:'+bg+';"' : ""} ${model.id == "you" ? 'class="you"' : ""}><td>${displayScore}</td><td title="${model.id}"><img src="/${model.icon}" style="width: 15px; margin-right: 3px; vertical-align: middle;"/>${model.short}</td><td>${model.correct}</td></tr>`)
     modelRank++
     lastScore = model.correct
@@ -105,13 +104,18 @@ function updateQuestion(q, choice, showAnswer){
   if (!choice) chosenAnswer = null
   chosenAnswer = choice
   let question = _data[q]
-  console.log(showAnswer, question.correctchoice)
 
   byID("number").innerText = "#" + (q + 1)
   byID("question").innerText = question.question
   byID("answers").innerHTML = ""
   for (let i=1; i<5; i++){
-    byID("answers").insertAdjacentHTML("beforeend", `<li class="answer ${showAnswer && ["A", "B", "C", "D"][i-1] == question.correctchoice ? `bold` : ""}" onclick="updateQuestion(${q}, ${i})">${choice === i ? `<img class="sketch" src="/sketch.png"/>` : ""}${question["choice"+i]} ${showAnswer && ["A", "B", "C", "D"][i-1] == question.correctchoice ? `<img class="check" src="/check.png"/>` : ""}</li>`)
+    let modelImages = ""
+    for (let model of models) {
+      if (model.lastchoice + 1 == i && showAnswer){
+        modelImages = modelImages + ` <img title ="${model.short}" src="/${model.icon}" style="width: 15px; margin-right: 3px;"/>`
+      }
+    }
+    byID("answers").insertAdjacentHTML("beforeend", `<li class="answer ${showAnswer && ["A", "B", "C", "D"][i-1] == question.correctchoice ? `bold` : ""}" ${!showAnswer ? `onclick="updateQuestion(${q}, ${i})"` : ""}>${choice === i ? `<img class="sketch" src="/sketch.png"/>` : ""}${question["choice"+i]} ${modelImages}</li>`)
   }
   
 }
@@ -119,28 +123,37 @@ function updateQuestion(q, choice, showAnswer){
 function checkAnswer(){
   if (!chosenAnswer) return alert("Please click on an answer choice.")
   let question = _data[number]
+  let mappings = ["A", "B", "C", "D"]
   for (let model of models) {
     if (model.id == "you"){
-      let mappings = ["A", "B", "C", "D"]
+      
       let answer = mappings[chosenAnswer-1]
       if (question.correctchoice == answer) {
         model.correct++
         model.last = true
+        byID("a").classList.add("animate")
+        setTimeout(function(){byID("a").classList.remove("animate")}, 5000)
       } else {
         model.last = false
+        byID("f").classList.add("animate")
+        setTimeout(function(){byID("f").classList.remove("animate")}, 5000)
       }
-      console.log(chosenAnswer, answer, question.correctchoice)
 
-    } else if (question[model.id] === question.correctchoice) {
-      model.correct++
-      model.last = true
     } else {
-      model.last = false
-    }
+      model.last = question[model.id] === question.correctchoice
+      if (model.last) model.correct++
+      model.lastchoice = mappings.indexOf(question[model.id])
+    } 
   }
   
   updateQuestion(number, chosenAnswer, true)
   updateLeaderboard(true)
+
+  if (number + 1 >= _data.length){
+    byID("check").innerText = "All done!"
+    byID("check").disabled = true
+    return
+  }
   byID("check").innerText = "Next question"
   byID("check").onclick = function(){
     number++;

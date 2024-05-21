@@ -1,7 +1,18 @@
 head.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Are You Smarter Than An AI?">
+  <meta property="og:description" content="Humans can do evals, too.">
+  <meta property="og:image" content="/share.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Are You Smarter Than An AI?">
+  <meta name="twitter:description" content="Humans can do evals, too.">
+  <meta name="twitter:image" content="/share.png">
+  <script defer src="https://umani.api.route.run/script.js" data-website-id="e458a477-82de-453d-800e-d839361fbdec"></script>
 
 style.
+  
   #main {
     
     width: 100%; 
@@ -36,7 +47,7 @@ style.
    align-items: center;
    justify-content: center;
    width: calc(100% - 40px);
-   padding: 50px 20px 50px 20px;
+   padding: 50px 20px 65px 20px;
   }
 
   #logo {
@@ -117,7 +128,7 @@ style.
   #manifesto {
     font-size: 1.2rem;
     max-width: 600px;
-    padding: 0 50px;
+    padding: 0 50px 75px 50px;
     margin: 100px auto;
   }
   
@@ -135,6 +146,8 @@ style.
     
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
   }
+
+  
 
   #questionbox {
     background-color: #ffffff;
@@ -165,7 +178,81 @@ style.
     gap: 50px;
     width: 100%;
     justify-content: center;
-    margin: 0 auto;
+    margin: -20px auto 0 auto;
+  }
+  @media (max-width: 671px) {
+    td {
+      font-size: 0.65rem;
+    }
+  } 
+
+  @media (max-width: 971px) {
+    #header {
+      flex-direction: column;
+    }
+
+    
+
+    #title {
+      font-size: 1.6rem;
+    }
+
+    #game {
+      flex-direction: column;
+      max-width: 100%;
+    }
+
+    #leaderboard {
+      min-width: revert;
+      width: calc(100% - 120px);
+      margin: 0 auto;
+    }
+
+    #questionbox {
+      width: calc(100% - 130px);
+      min-width: auto;
+      margin: 0 40px;
+    }
+
+    #question, .answer {
+      font-size: 1rem;
+    }
+  }
+
+  .grade {
+    height: 90px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .animate {
+    animation: stampAnimation 4s ease-in-out forwards!important;
+  }
+
+  @keyframes stampAnimation {
+      0% {
+          transform: scale(4.8);
+          opacity: 0;
+      }
+      10% {
+          transform: scale(1);
+          opacity: 0.8;
+      }
+      40% {
+          transform: scale(1);
+          opacity: 1;
+      }
+      60% {
+          transform: scale(1);
+          opacity: 1;
+      }
+      100% {
+          opacity: 0;
+        transform: scale(1);
+      }
   }
  
 
@@ -184,6 +271,8 @@ style.
   
   #game
     #questionbox
+      img#a.grade(src="/a.png")
+      img#f.grade(src="/f.png")
       #number 
       #question
       ol(type="A")#answers
@@ -197,13 +286,17 @@ style.
           tr
             th RANK
             th MODEL
-            th(style="width: 78px;") # CORRECT
+            th(style="") 👍
         tbody#tbody
   p#manifesto "Evals" (short for evaluations) are questions designed to test the abilities of large language models. Well, why can't they assess humans? 
     br
     br
     | Answer these questions and benchmark yourself to the latest models. See how you compare. It's time to play, 
-    b Are You Smarter Than An AI?
+    b
+      i Are You Smarter Than An AI?
+    br
+    br
+    span(style="font-size: 0.9rem;") Questions curated from <a href="https://arxiv.org/abs/2009.03300">MMLU</a> (yeah, it's not a perfect measure, but it's pretty good). Created by <a href="https://x.com/mehran__jalali">Mehran</a> and <a href="https://x.com/rtwlz">Riley</a> at the May 2024 Runpod hackathon.
   
           
 script(src="/answers.js")

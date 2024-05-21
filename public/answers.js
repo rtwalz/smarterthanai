@@ -817,7 +817,7 @@ let _data = [
       "openai/gpt-4o": "B"
     },
     {
-      "question": "Which of these rivers flows\"through France?",
+      "question": "Which of these rivers flows through France?",
       "choice1": "Volga",
       "choice2": "Seine",
       "choice3": "Mekong",
@@ -837,4 +837,5 @@ let _data = [
     }
   ].map(value => ({ value, sort: Math.random() }))
 .sort((a, b) => a.sort - b.sort)
-.map(({ value }) => value)
+.map(({ value }) => value);
+
